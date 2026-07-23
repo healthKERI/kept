@@ -12,21 +12,17 @@ from .essring import APIClient
 
 DEFAULT_ROOT_AID = "ENKyfXRjsKXTLHRNjKDDzaG8ah6xe0-sw_pANmrqWTb1"
 DEFAULT_API_AID = "EK5R4Y1mZXIjTJs-L4ljPrwbUu6uNWCJIjVIWhV6anUU"
-DEFAULT_ROOT_OOBI = "http://127.0.0.1:5642/oobi/ENKyfXRjsKXTLHRNjKDDzaG8ah6xe0-sw_pANmrqWTb1/witness?name=healthKERI%20Root"
-DEFAULT_API_OOBI = "http://127.0.0.1:5642/oobi/EK5R4Y1mZXIjTJs-L4ljPrwbUu6uNWCJIjVIWhV6anUU/witness?name=healthKERI%20API"
-DEFAULT_UNPROTECTED_URL = "http://localhost:8989"
-DEFAULT_PROTECTED_URL = "http://localhost:4443"
-DEFAULT_REMOTE_UNPROTECTED_URL = "http://164.92.79.134:9696"
-DEFAULT_REMOTE_PROTECTED_URL = "http://164.92.79.134:6969"
+DEFAULT_ROOT_OOBI = "http://witness-demo:5642/oobi/ENKyfXRjsKXTLHRNjKDDzaG8ah6xe0-sw_pANmrqWTb1/witness?name=healthKERI%20Root"
+DEFAULT_API_OOBI = "http://witness-demo:5642/oobi/EK5R4Y1mZXIjTJs-L4ljPrwbUu6uNWCJIjVIWhV6anUU/witness?name=healthKERI%20API"
+DEFAULT_UNPROTECTED_URL = "http://saas-platform:8989"
+DEFAULT_PROTECTED_URL = "http://saas-platform:4443"
 
 STAGING_ROOT_AID = "ENKyfXRjsKXTLHRNjKDDzaG8ah6xe0-sw_pANmrqWTb1"
 STAGING_API_AID = "ELucL12aBcsSc90EbPOw_OpuSpizTb6pfqfA-WyiKFks"
-STAGING_ROOT_OOBI = "http://127.0.0.1:5642/oobi/ENKyfXRjsKXTLHRNjKDDzaG8ah6xe0-sw_pANmrqWTb1/witness?name=healthKERI%20Root"
-STAGING_API_OOBI = "http://127.0.0.1:5642/oobi/ELucL12aBcsSc90EbPOw_OpuSpizTb6pfqfA-WyiKFks/witness?name=healthKERI%20API"
-STAGING_UNPROTECTED_URL = "http://localhost:8989"
-STAGING_REMOTE_UNPROTECTED_URL = "http://164.92.79.134:9696"
-STAGING_PROTECTED_URL = "http://localhost:8990"
-STAGING_REMOTE_PROTECTED_URL = "http://164.92.79.134:6969"
+STAGING_ROOT_OOBI = "http://witness-demo:5642/oobi/ENKyfXRjsKXTLHRNjKDDzaG8ah6xe0-sw_pANmrqWTb1/witness?name=healthKERI%20Root"
+STAGING_API_OOBI = "http://witness-demo:5642/oobi/ELucL12aBcsSc90EbPOw_OpuSpizTb6pfqfA-WyiKFks/witness?name=healthKERI%20API"
+STAGING_UNPROTECTED_URL = "http://saas-platform:8989"
+STAGING_PROTECTED_URL = "http://saas-platform:8990"
 
 PRODUCTION_ROOT_AID = "EO2ZPXThLo1GmRQ_fxFlDyQdzPGc9pEmxzeXIVLSFt3x"
 PRODUCTION_API_AID = "ENJpJfLxehegdlxfzJj9qQHJDPDir3KJKsJWwqxCsTnb"
@@ -34,8 +30,6 @@ PRODUCTION_ROOT_OOBI = "https://root.healthkeri.net/oobi/EO2ZPXThLo1GmRQ_fxFlDyQ
 PRODUCTION_API_OOBI = "https://root.healthkeri.net/oobi/ENJpJfLxehegdlxfzJj9qQHJDPDir3KJKsJWwqxCsTnb/witness?name=healthKERI%20API"
 PRODUCTION_UNPROTECTED_URL = "https://api.healthkeri.net"
 PRODUCTION_PROTECTED_URL = "http://64.225.88.24:5632"
-PRODUCTION_REMOTE_UNPROTECTED_URL = PRODUCTION_UNPROTECTED_URL
-PRODUCTION_REMOTE_PROTECTED_URL = PRODUCTION_PROTECTED_URL
 
 
 logging.basicConfig(level=logging.INFO)
@@ -88,7 +82,7 @@ class HealthKERIConfig:
                 environment = Environments.DEVELOPMENT
             case _:
                 environment = Environments.PRODUCTION
-        logger.info(f"Running in the {environment} environment")
+        logger.debug(f"Running in the {environment} environment")
 
         # Set defaults for each environment, and default env is production
         root_aid = DEFAULT_ROOT_AID
@@ -97,8 +91,6 @@ class HealthKERIConfig:
         api_oobi = DEFAULT_API_OOBI
         unprotected_url = DEFAULT_UNPROTECTED_URL
         protected_url = DEFAULT_PROTECTED_URL
-        remote_unprotected_url = DEFAULT_REMOTE_UNPROTECTED_URL
-        remote_protected_url = DEFAULT_REMOTE_PROTECTED_URL
 
         match environment:
             case Environments.PRODUCTION:
@@ -134,12 +126,7 @@ class HealthKERIConfig:
             "ARCHIMEDES_UNPROTECTED_URL", unprotected_url
         )
         self.protected_url = os.environ.get("ARCHIMEDES_PROTECTED_URL", protected_url)
-        self.remote_unprotected_url = os.environ.get(
-            "ARCHIMEDES_REMOTE_UNPROTECTED_URL", remote_unprotected_url
-        )
-        self.remote_protected_url = os.environ.get(
-            "ARCHIMEDES_REMOTE_PROTECTED_URL", remote_protected_url
-        )
+
         self.environment = environment
 
 
