@@ -29,7 +29,7 @@ PRODUCTION_API_AID = "ENJpJfLxehegdlxfzJj9qQHJDPDir3KJKsJWwqxCsTnb"
 PRODUCTION_ROOT_OOBI = "https://root.healthkeri.net/oobi/EO2ZPXThLo1GmRQ_fxFlDyQdzPGc9pEmxzeXIVLSFt3x/witness?name=healthKERI%20Root"
 PRODUCTION_API_OOBI = "https://root.healthkeri.net/oobi/ENJpJfLxehegdlxfzJj9qQHJDPDir3KJKsJWwqxCsTnb/witness?name=healthKERI%20API"
 PRODUCTION_UNPROTECTED_URL = "https://api.healthkeri.net"
-PRODUCTION_PROTECTED_URL = "http://64.225.88.24:5632"
+PRODUCTION_PROTECTED_URL = "http://24.199.69.207:5632"
 
 
 logging.basicConfig(level=logging.INFO)
