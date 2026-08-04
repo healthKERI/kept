@@ -25,9 +25,9 @@ STAGING_UNPROTECTED_URL = "http://saas-platform:8989"
 STAGING_PROTECTED_URL = "http://saas-platform:8990"
 
 PRODUCTION_ROOT_AID = "EO2ZPXThLo1GmRQ_fxFlDyQdzPGc9pEmxzeXIVLSFt3x"
-PRODUCTION_API_AID = "ENJpJfLxehegdlxfzJj9qQHJDPDir3KJKsJWwqxCsTnb"
+PRODUCTION_API_AID = "EGlRNdoPido_mhKAlUBDXKj9HCJdnsLtssgtPgt0Od0Q"
 PRODUCTION_ROOT_OOBI = "https://root.healthkeri.net/oobi/EO2ZPXThLo1GmRQ_fxFlDyQdzPGc9pEmxzeXIVLSFt3x/witness?name=healthKERI%20Root"
-PRODUCTION_API_OOBI = "https://root.healthkeri.net/oobi/ENJpJfLxehegdlxfzJj9qQHJDPDir3KJKsJWwqxCsTnb/witness?name=healthKERI%20API"
+PRODUCTION_API_OOBI = "https://root.healthkeri.net/oobi/EGlRNdoPido_mhKAlUBDXKj9HCJdnsLtssgtPgt0Od0Q/witness?name=healthKERI%20API"
 PRODUCTION_UNPROTECTED_URL = "https://api.healthkeri.net"
 PRODUCTION_PROTECTED_URL = "http://24.199.69.207:5632"
 
