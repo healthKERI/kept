@@ -12,18 +12,17 @@ import logging
 import math
 import random
 from io import BytesIO
-
+from typing import Optional
 from urllib.parse import urlparse
 
 import cbor
 import pysodium
 import requests
 from keri import core
-
 from keri.core import parsing, serdering, coring, counting
 from keri.help import helping
-from keri.peer import exchanging
 from keri.kering import Vrsn_1_0
+from keri.peer import exchanging
 
 from ..core.tcp.client import AsyncTCPClient
 
@@ -51,14 +50,11 @@ class APIClient:
         self.port = up.port
         self.root = root
 
-        # Create event and client
-        self._client = None
-
     async def request(
         self,
         path="/",
         method="GET",
-        data: bytes = None,
+        data: Optional[bytes] = None,
         json=None,
         files=None,
         headers=None,
@@ -87,13 +83,13 @@ class APIClient:
         req, reqid = self.http(path, method, data, json, files, headers)
         ims = self.essr(req)
 
-        self._client = AsyncTCPClient(self.hostname, self.port)
+        _client = AsyncTCPClient(self.hostname, self.port)
 
         try:
             # Connect to the server
-            if await self._client.connect():
+            if await _client.connect():
                 # Send the request
-                if await self._client.send(ims):
+                if await _client.send(ims):
                     logger.debug(
                         f"Request sent successfully to {self.hostname}:{self.port}"
                     )
@@ -101,7 +97,7 @@ class APIClient:
                     # Wait for response with timeout
                     try:
                         rep, dig = await asyncio.wait_for(
-                            self._read_and_parse(reqid, timeout=timeout),
+                            self._read_and_parse(reqid, _client, timeout=timeout),
                             timeout=timeout,
                         )
                         logger.debug(f"Response received and processed. {rep}")
@@ -138,9 +134,9 @@ class APIClient:
                 )
         finally:
             # Ensure client is disconnected
-            await self._client.disconnect()
+            await _client.disconnect()
 
-    async def _read_and_parse(self, reqid, timeout: int = None):
+    async def _read_and_parse(self, reqid, _client, timeout: Optional[int] = None):
         """Read and parse response from ESSR/TCP"""
         # Create parser with shared buffer
         ims = bytearray()
@@ -166,7 +162,7 @@ class APIClient:
         while decoder.dig != reqid:
             try:
                 # Receive chunk of data (like locksmith's client continuously filling rxbs)
-                buf = await self._client.receive(4096)
+                buf = await _client.receive(4096)
 
                 if not buf:
                     # Connection closed without receiving response
@@ -192,11 +188,17 @@ class APIClient:
         return (decoder.rep, decoder.dig)
 
     async def close(self):
-        if self._client:
-            await self._client.disconnect()
+        """Leaving this here as a no-op for backward compatibility"""
+        pass
 
     def http(
-        self, path, method, data: bytes = None, json=None, files=None, headers=None
+        self,
+        path,
+        method,
+        data: Optional[bytes] = None,
+        json=None,
+        files=None,
+        headers=None,
     ):
 
         if data is not None:
